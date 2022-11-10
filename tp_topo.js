@@ -61,6 +61,64 @@ function mergeFaces(m,e)
 	// phi1sew et deleteCycle
 }
 
+function decalZ(f)
+{
+ return f.phi2.phi1.phi1.phi2.phi1
+}
+
+function createCube(m2,vpos)
+{
+ // 6 carrés newCycle)
+ let f1 = m2.newCycle(4);
+ let f2 = m2.newCycle(4);
+ let f3 = m2.newCycle(4);
+ let f4 = m2.newCycle(4);
+ let f5 = m2.newCycle(4);
+ let f6 = m2.newCycle(4);
+
+ phi2Sew(f1,f2);
+ phi2Sew(f1.phi1, f3);
+ phi2Sew(f1.phi1.phi1, f4);
+ phi2Sew(f1.phi_1, f5);
+
+ phi2Sew(f2.phi_1, f3.phi1);
+ phi2Sew(f2.phi1, f5.phi_1);
+ phi2Sew(f2.phi1.phi1, f6.phi1);
+
+ phi2Sew(f3.phi_1, f4.phi1);
+ phi2Sew(f3.phi1.phi1, f6);
+
+ phi2Sew(f4.phi1.phi1, f6.phi_1);
+ phi2Sew(f4.phi_1, f5.phi1);
+
+ phi2Sew(f5.phi1.phi1, f6.phi1.phi1);
+
+
+ embedNewCell(m2.Vertex,f1);
+ vpos.setValue(f1,Vec3(-0.5,-0.5,-0.5));
+
+ embedNewCell(m2.Vertex,decalZ(f1));
+ vpos.setValue(decalZ(f1),Vec3(-0.5,-0.5,0.5));
+
+ embedNewCell(m2.Vertex,f1.phi1);
+ vpos.setValue(f1.phi1,Vec3(0.5,-0.5,-0.5));
+
+ embedNewCell(m2.Vertex,decalZ(f1.phi1));
+ vpos.setValue(decalZ(f1.phi1),Vec3(0.5,-0.5,0.5));
+
+ embedNewCell(m2.Vertex,f1.phi1.phi1);
+ vpos.setValue(f1.phi1.phi1,Vec3(0.5,0.5,-0.5));
+ 
+ embedNewCell(m2.Vertex,decalZ(f1.phi1.phi1));
+ vpos.setValue(decalZ(f1.phi1.phi1),Vec3(0.5,0.5,0.5));
+
+ embedNewCell(m2.Vertex,f1.phi_1);
+ vpos.setValue(f1.phi_1,Vec3(-0.5,0.5,-0.5));
+
+ embedNewCell(m2.Vertex,decalZ(f1.phi_1));
+ vpos.setValue(decalZ(f1.phi_1),Vec3(-0.5,0.5,0.5));
+}
+
 function createTetra(m2,vpos)
 {
     // 4 triangles (newCycle)
@@ -138,6 +196,7 @@ function tp_init()
 	VPOS = vertex_position;
 	
 	let myobject = createTetra(CM,VPOS);
+	// let myobject = createCube(CM,VPOS);
 }
 
 // raccourci clavier
